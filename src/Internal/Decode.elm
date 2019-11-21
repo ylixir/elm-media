@@ -86,33 +86,34 @@ decodePlaybackStatus =
     let
         toPlaybackStatus : Maybe PlaybackError -> ReadyState -> Bool -> Bool -> Decoder PlaybackStatus
         toPlaybackStatus error ready ended paused =
-            case error of
-                Just err ->
-                    succeed <| PlaybackError err
+            if ended then
+                succeed Ended
 
-                Nothing ->
-                    case ready of
-                        HaveNothing ->
-                            succeed Loading
+            else
+                case error of
+                    Just err ->
+                        succeed <| PlaybackError err
 
-                        HaveMetadata ->
-                            succeed Loading
+                    Nothing ->
+                        case ready of
+                            HaveNothing ->
+                                succeed Loading
 
-                        HaveCurrentData ->
-                            succeed Buffering
+                            HaveMetadata ->
+                                succeed Loading
 
-                        HaveFutureData ->
-                            succeed Buffering
+                            HaveCurrentData ->
+                                succeed Buffering
 
-                        HaveEnoughData ->
-                            if ended then
-                                succeed Ended
+                            HaveFutureData ->
+                                succeed Buffering
 
-                            else if paused then
-                                succeed Paused
+                            HaveEnoughData ->
+                                if paused then
+                                    succeed Paused
 
-                            else
-                                succeed Playing
+                                else
+                                    succeed Playing
     in
     succeed toPlaybackStatus
         |> custom decodePlaybackError
