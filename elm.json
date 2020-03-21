@@ -1,0 +1,14 @@
+{ "dependencies":
+    { "NoRedInk/elm-decode-pipeline": "3.0.1 <= v < 4.0.0"
+    , "elm-lang/core": "5.1.1 <= v < 6.0.0"
+    , "elm-lang/html": "2.0.0 <= v < 3.0.0"
+    }
+, "elm-version": "0.19.0 <= v < 0.20.0"
+, "exposed-modules": [ "Media", "Media.Events", "Media.Source", "Media.State" ]
+, "license": "BSD3"
+, "name": "ylixir/ylm-media"
+, "summary": "A wrapping of the HTML5 Media API for build Multimedia Applications"
+, "test-dependencies": {}
+, "type": "package"
+, "version": "3.1.0"
+}
